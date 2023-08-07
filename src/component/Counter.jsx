@@ -1,4 +1,6 @@
-import React,{component}  from 'react'
+import React,{Component}  from 'react'
+import ReactDOM from 'react-dom'
+
 class Counter extends Component{
     constructor(props){
         super(props);
@@ -6,7 +8,50 @@ class Counter extends Component{
             view:false
         }
     }
+
+    //props inc
+    countHandler(){
+        ReactDOM.render(
+            <React.StrictMode>
+                <Counter num={this.props.num+1}/>
+            </React.StrictMode>,document.getElementById("renderHere")
+        )
+    }
+
+    /*Mount methods*/
+    componentWillMount(){
+        console.log(`deprecated-component will mount called`)
+    }
+
+    componentDidMount(){
+        console.log(`component did mount called`)
+    }
+    /*update stage */
+    //@deprecated — 16.3, use static getDerivedStateFromProps instead; will stop working in React 17
+    componentWillReceiveProps(nP){
+        console.log(`deprecated-component will update`)
+        console.log('newProps=',nP)
+        if(nP.num>=10){
+            this.setState({
+                view:true
+            })
+        }
+    }
+    shouldComponentUpdate(nP,nS){
+        console.log(`deprecated-component will update or not?`)
+        console.log('newProps=',nP)
+        console.log('newState=',nS)
+        return true;
+
+    }
+    //@deprecated — 16.3, use getSnapshotBeforeUpdate instead; will stop working in React 17
+    componentWillUpdate(nP,nS){
+        console.log(`deprecated-component will update`)
+        console.log('newProps=',nP)
+        console.log('newState=',nS)
+    }
     render(){
+        console.log('component rendered')
         return(
             <div className="container">
                 <div className="row">
@@ -26,8 +71,9 @@ class Counter extends Component{
                                 (
                                     <div>
                                         <h1 className="text-center text-warning">Need more counts</h1>
-                                        <button className="btn btn-dark">Increment</button>
+                                        <button onClick={()=>this.countHandler()} className="btn btn-dark">Increment props</button>   
                                     </div>
+                                    //In console state->make uncheck unmount inc button and displays welcome to react i.e stae->view:false,make it true
                                 )
                             }
                         </div>
@@ -35,6 +81,15 @@ class Counter extends Component{
                 </div>
             </div>
         )
+    }
+    componentDidUpdate(oP,oS){
+        console.log(`component did update`)
+        console.log(`oldProps=`,oP)
+        console.log(`oldState=`,oS)
+    }
+    //unmount
+    componentWillUnmount(){
+        console.log('component unmounted successfully')
     }
 }
 export default Counter

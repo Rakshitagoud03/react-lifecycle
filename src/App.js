@@ -1,4 +1,6 @@
 import React, {Component} from  'react'
+import ReactDOM from 'react-dom'
+import Counter from'./component/Counter'
 
 class App extends Component{
   constructor(props){
@@ -7,8 +9,8 @@ class App extends Component{
   mount(){
     ReactDOM.render(<React.StrictMode>
       <Counter num={0}/>
-    </React.StrictMode>,document.getElementById('renderHere')
-      )
+    </React.StrictMode>,document.getElementById('renderHere'))
+      
   }
   unMount(){
     ReactDOM.unmountComponentAtNode(document.getElementById("renderHere"))
